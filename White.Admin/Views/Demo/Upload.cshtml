@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "ImageTest";
+}
+
+@section Styles{
+    
+}
+
+@section Scripts{
+    <script src="~/Content/js/fileupload.min.js"></script> <!-- File Upload -->
+    <script>
+        $('#UploadForm').ajaxForm({
+            beforeSubmit: function () {
+                layer.load(1);
+            },
+            success: function (json) {
+                layer.closeAll();
+
+                if (json.Status == "success") {
+                    layer.msg(json.Message, { icon: 1 }, function () { window.location.href = '/Dashboard/Resource' });
+                } else {
+                    layer.msg("登录失败，请稍后重试", { btn: ["确定"] });
+                }
+            }
+        });
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li class="active">首页</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+
+
+<form id="UploadForm" method="post" action="/Demo/UploadFile">
+    <div class="fileupload fileupload-new block-area m-l-20" data-provides="fileupload">
+        <div class="fileupload-preview thumbnail form-control"></div>
+
+        <div>
+            <span class="btn btn-file btn-alt btn-sm">
+                <span class="fileupload-new">Select image</span>
+                <span class="fileupload-exists">Change</span>
+                <input type="file" name="imageFile" />
+            </span>
+            <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">Remove</a>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-info btn-sm m-t-10">保存</button>
+</form>
+
+

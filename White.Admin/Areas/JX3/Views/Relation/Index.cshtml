@@ -1,0 +1,216 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "师门关系";
+}
+
+@section Styles{
+<style type="text/css">
+    /**布局*/
+    ul {
+        padding: 0;
+    }
+
+    .person-list {
+        margin: 0 0 0 20px;
+        width: 600px;
+        list-style-type: none;
+        font-size: 14px;
+        color: #fff;
+    }
+
+        .person-list ul {
+            margin: 0;
+            list-style-type: none;
+        }
+
+        .person-list > li > ul > li > div {
+            padding-left: 50px;
+        }
+
+        .person-list > li > ul > li > ul > li > div {
+            padding-left: 95px;
+        }
+
+        .person-list > li > ul > li > ul > li > ul > li > div {
+            padding-left: 140px;
+        }
+
+        /**细节*/
+        .person-list div {
+            padding: 5px;
+        }
+
+
+            .person-list div i {
+                padding: 5px;
+                cursor: pointer;
+            }
+
+            .person-list div span:last-child {
+                margin-left: 20px;
+                float: right;
+                margin-right: 20px;
+            }
+
+                .person-list div span:last-child a {
+                    margin-left: 5px;
+                    z-index: 99;
+                }
+</style>
+}
+
+@section Scripts{
+<script>
+        $(function () {
+
+            $("#relationOrderForm").ajaxForm({
+                beforeSubmit: function () {
+                    layer.load(1);
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 }, function () { window.location.reload(); });
+                    } else {
+                        layer.msg(json.Message, { icon: 2 });
+                    }
+                },
+                error: function (msg) {
+                    layer.alert(msg);
+                }
+            });
+
+            initOpenRelation();
+
+            $(".person-list div .fa-plus-square-o").trigger("click");
+        });
+
+
+        //注册打开菜单事件
+        function initOpenRelation() {
+            $(".person-list div .fa-plus-square-o").click(function () {
+                $(this).toggleClass("fa-plus-square-o").toggleClass("fa-minus-square-o");
+                $(this).parent().nextAll("ul").slideToggle(200);
+            });
+        }
+        //删除菜单
+        function Del(obj, id) {
+            var relationName = $(obj).parent().prev().text();
+            layer.confirm("确定要删除“" + relationName + "”吗？", { icon: 3 }, function () {
+                $.post("/JX3/Relation/Del/" + id, function (json) {
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 });
+                        $(obj).parent().parent().parent().fadeOut(300);
+                    } else {
+                        layer.msg(json.Message, { icon: 2 });
+                    }
+                });
+            });
+        }
+
+        //菜单排序功能
+        function order() {
+            layer.load(1);
+            $.ajax({
+                url: "/JX3/Relation/GetOrder",
+                type: "post",
+                success: function (data) {
+                    layer.closeAll();
+                    $("#relation-list").hide();
+                    $("#relation-list-order").show();
+                    $("#relation-list-order .person-list").html(data);
+                }
+            });
+
+            $("#btnOrder").hide();
+            $("#btnSave").show();
+            $("#btnCancel").show();
+        }
+        //取消菜单排序
+        function orderCancel() {
+            $("#relation-list").show();
+            $("#relation-list-order").hide();
+
+            $("#btnOrder").show();
+            $("#btnSave").hide();
+            $("#btnCancel").hide();
+        }
+        //执行菜单排序操作
+        function saveOrder() {
+            var index = 1;
+            $("#relation-list-order .person-list div").each(function () {
+                $(this).find("input").eq(1).val(index);
+                index++;
+            });
+            $("#relationOrderForm").submit();
+        }
+        //向上移动菜单
+        function setUp(obj) {
+            var $currentLi = $(obj).parents("li:first").attr("style", "");
+            var $prevLi = $currentLi.prev().attr("style", "color:#D15B47;font-weight:600");
+            if ($prevLi) {
+                var tmp = $currentLi.html();
+                $currentLi.html($prevLi.html());
+                $prevLi.html(tmp);
+            }
+        }
+        //向下移动菜单
+        function setDown(obj) {
+            var $currentLi = $(obj).parents("li:first").attr("style", "");
+            var $nextLi = $currentLi.next().attr("style", "color:#D15B47;font-weight:600");
+            if ($nextLi) {
+                var tmp = $currentLi.html();
+                $currentLi.html($nextLi.html());
+                $nextLi.html(tmp);
+            }
+        }
+</script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li><a href="/Home">首页</a></li>
+    <li><a href="#">剑网三</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="inline">
+    <button type="button" onclick="order()" class="btn btn-sm red" id="btnOrder">
+        <i class="fa fa-sort-numeric-asc"></i> 排序
+    </button>
+    <button type="button" onclick="saveOrder()" class="btn btn-sm blue" id="btnSave" style="display:none;">
+        <i class="fa fa-check"></i> 保存
+    </button>
+    <button type="button" onclick="orderCancel()" class="btn btn-sm" id="btnCancel" style="display:none;">
+        <i class="fa fa-times"></i> 取消
+    </button>
+    <button type="button" onclick="javascript: location.href = '/JX3/Relation/Edit'" class="btn btn-sm red" id="btnAdd">
+        添加
+    </button>
+</div>
+
+<hr class="whiter m-t-20" />
+
+<div id="relation-list">
+    <div>
+        <ul class="person-list">
+            @Html.Raw(ViewBag.Data.TreeHtml)
+        </ul>
+    </div>
+</div>
+<div id="relation-list-order" style="display:none">
+    <form id="relationOrderForm" action="/JX3/Relation/Order" method="post">
+        <div>
+            <ul class="person-list">
+                @Html.Raw(ViewBag.Data.TreeHtml)
+            </ul>
+        </div>
+    </form>
+</div>
+

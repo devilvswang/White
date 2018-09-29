@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = null;
+}
+
+@section Styles{
+
+}
+
+@section Scripts{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Error</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script language="javascript" type="text/javascript">
+        var i = 5;
+        var intervalid;
+        intervalid = setInterval("fun()", 1000);
+        function fun() {
+            if (i == 0) {
+                window.location.href = "/Home";
+                clearInterval(intervalid);
+            }
+            i--;
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <a href="/Home"><img src="~/Content/img/page/errorpic.jpg" /></a>
+    </div>
+</body>
+</html>

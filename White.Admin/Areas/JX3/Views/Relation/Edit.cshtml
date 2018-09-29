@@ -1,0 +1,130 @@
+﻿@model Relation
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "关系编辑";
+}
+
+@section Styles{
+
+}
+
+@section Scripts{
+    <script src="~/Content/js/markdown.min.js"></script> <!-- Markdown Editor -->
+    <script>
+        $(function () {
+            $('#EditForm').ajaxForm({
+                beforeSubmit: function () {
+                    layer.load(1);
+                },
+                success: function (json) {
+                    layer.closeAll();
+
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 }, function () { window.location.href = '/JX3/Relation' });
+                    } else {
+                        layer.msg("登录失败，请稍后重试", { btn: ["确定"] });
+                    }
+                }
+            });
+        });
+
+        function choseMenuPanel() {
+
+            $.ajax({
+                url: "/JX3/Relation/GetTree",
+                type: "post",
+                success: function (data) {
+
+                    $("#choseMenuList").html(data);
+
+                    var parentId = $("#ParentID").val();
+
+                    $("#relationPanel").modal("show");
+
+                    $("#choseMenuList input[value='" + parentId + "']").attr("checked", true);
+
+                }
+            });
+        }
+
+        function choseMenu() {
+            var $obj = $("#choseMenuList input[type=radio]:checked");
+            if ($obj.length > 0) {
+                $("#ParentID").val($obj.val());
+                $("#ParentName").val($obj.next().text());
+
+                $("#relationPanel").modal("hide");
+            } else {
+                layer.alert("抱歉，请选择父级菜单！", { icon: 2 });
+            }
+        }
+
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li><a href="/Home">首页</a></li>
+    <li><a href="/JX3/Relation">师门关系</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="horizontal">
+    <h3 class="block-title">基本信息</h3>
+    <form class="form-horizontal form-validation" role="form" id="EditForm" method="post" action="/JX3/Relation/Edit">
+        <input type="hidden" id="ID" name="ID" value="@Model.ID" />
+        <input type="hidden" id="ParentID" name="ParentID" value="@Model.ParentID" />
+        <div class="form-group">
+            <label for="ParentName" class="col-md-2 control-label">羁绊</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control input-sm validate[required]" id="ParentName" value="@ViewBag.Data.ParentName" readonly placeholder="...">
+            </div>
+            <a class="btn btn-sm" data-toggle="modal" id="btnPanel" href="#modalDefault" onclick="choseMenuPanel()">选择菜单</a>
+        </div>
+        <div class="form-group">
+            <label for="Name" class="col-md-2 control-label">叫啥</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control input-sm validate[required]" id="Name" name="Name" value="@Model.Name" placeholder="...">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="CSS" class="col-md-2 control-label">具体关系</label>
+            <div class="col-md-6">
+                <textarea class="markdown-editor validate[required]" name="Describe" rows="10">@Html.Raw(Model.Describe)</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info btn-sm m-t-10">保存</button>
+                <button type="button" class="btn btn-info btn-sm m-t-10" onclick="javascript:history.go(-1)">返回</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="modal fade" id="relationPanel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="choseMenuList"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm" onclick="choseMenu()">确定</button>
+                <button type="button" class="btn btn-sm" data-dismiss="modal" id="btnClose">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>

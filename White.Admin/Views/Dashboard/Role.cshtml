@@ -1,0 +1,91 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "角色管理";
+
+    var list = Model as List<Role>;
+}
+
+@section Styles{
+}
+
+@section Scripts{
+    <script>
+        //删除
+        function Del(obj, id) {
+            layer.confirm("确定要删除角色吗？", { icon: 3 }, function () {
+                $.post("/Dashboard/RoleDel/" + id, function (json) {
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 });
+                        $(obj).parent().parent().parent().fadeOut(300);
+                    } else {
+                        layer.msg(json.Message, { icon: 2 });
+                    }
+                });
+            });
+        }
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li><a href="/Home">首页</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="inline">
+    <form class="form-inline" role="form">
+        <div class="form-group m-r-5">
+            <label class="sr-only" for="text1"></label>
+            <input type="email" class="form-control input-sm" id="text1" placeholder="名称">
+        </div>
+
+        <button type="submit" class="btn btn-sm">查询</button>
+
+        <button type="button" onclick="javascript: location.href = '/Dashboard/RoleEdit'" class="btn btn-sm red" id="btnAdd">
+            添加
+        </button>
+    </form>
+
+
+</div>
+
+<hr class="whiter m-t-20" />
+
+<div class="block-area" id="tableStriped">
+    <div class="table-responsive overflow">
+        <table class="tile table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>角色名称</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var index = 1;
+
+                    foreach (var item in list)
+                    {
+                        <tr>
+                            <td>@(index++)</td>
+                            <td>@item.Name</td>
+                            <td>@item.CreateDate</td>
+                            <td>
+                                <a href="/Dashboard/RoleEdit/@item.ID">编辑</a>
+                                <a href="javascript:;" onclick="Del(this,@item.ID)">删除</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

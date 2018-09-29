@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body onload="onload()">
+    <div>
+        原始Json：@ViewBag.Json
+    </div>
+    <div>
+        @foreach (var item in ViewBag.Dict)
+        {
+            @((item.Key) + ":" + (item.Value))<br/>
+        }
+    </div>
+    <div>
+        序列化后Json：@Html.Raw(ViewBag.JStr)
+    </div>
+    <div>
+        序列化后Json数组：@Html.Raw(ViewBag.JStrList)
+    </div>
+    <script>
+        function onload() {
+
+            
+        }
+    </script>
+</body>
+</html>

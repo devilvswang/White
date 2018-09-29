@@ -1,0 +1,167 @@
+﻿@{
+    Layout = null;
+    var loginUser = new White.Admin.Controllers.PermissionController().LoginUser;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>@ViewBag.Title</title>
+
+    <!-- CSS -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/animate.min.css" rel="stylesheet">
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/css/form.css" rel="stylesheet">
+    <link href="~/Content/css/calendar.css" rel="stylesheet">
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <link href="~/Content/css/icons.css" rel="stylesheet">
+    <link href="~/Content/css/generics.css" rel="stylesheet">
+    <link href="~/Content/css/font-awesome-v4.7.min.css" rel="stylesheet" />
+    @RenderSection("Styles", false)
+
+    @{
+        ViewBag.Skin = White.Base.BaseController.SkinClass();
+    }
+</head>
+
+<body id="@ViewBag.Skin">
+
+    <header id="header" class="media">
+        <a href="#" id="menu-toggle"></a>
+        @*<a class="logo pull-left" href="index.html"></a>*@
+
+        <div class="media-body">
+            <div class="media" id="top-menu">
+                @*<div class="pull-left tm-icon">
+                        <a data-drawer="messages" class="drawer-toggle" href="">
+                            <i class="sa-top-message"></i>
+                            <i class="n-count animated">5</i>
+                            <span>Messages</span>
+                        </a>
+                    </div>
+                    <div class="pull-left tm-icon">
+                        <a data-drawer="notifications" class="drawer-toggle" href="">
+                            <i class="sa-top-updates"></i>
+                            <i class="n-count animated">9</i>
+                            <span>Updates</span>
+                        </a>
+                    </div>*@
+
+
+
+                <div id="time" class="pull-right">
+                    <span id="hours"></span>
+                    :
+                    <span id="min"></span>
+                    :
+                    <span id="sec"></span>
+                </div>
+
+                @*<div class="media-body">
+                        <input type="text" class="main-search">
+                    </div>*@
+            </div>
+        </div>
+    </header>
+
+    <div class="clearfix"></div>
+
+    <section id="main" class="p-relative" role="main">
+
+        <!-- 侧栏 -->
+        <aside id="sidebar">
+
+            <!-- 左侧工具栏 -->
+            <div class="side-widgets overflow">
+                <!-- 个人信息 -->
+                <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                    <a href="" data-toggle="dropdown">
+                        <img class="profile-pic animated" src="~/Content/img/portrait_menhera.jpg" alt="">
+                    </a>
+                    <ul class="dropdown-menu profile-menu">
+                        <li><a href="">个人信息</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                        <li><a href="">重置密码</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                        <li><a href="/Admin/Logout" onclick="layer.load(1)">退出</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                    </ul>
+                    <h4 class="m-0">@loginUser.Realname</h4>
+
+                </div>
+
+                <!-- 日历 -->
+                <div class="s-widget m-b-25">
+                    <div id="sidebar-calendar"></div>
+                </div>
+
+            </div>
+
+            <!-- 左侧菜单 -->
+            <ul class="list-unstyled side-menu p-t-5">
+                @Html.Action("LeftTreeMenu", "Admin", new { area = "" })
+                @if (loginUser.IsAdmin)
+                {
+                    <li class="dropdown">
+                        <a class="" href="#">
+                            <i class="fa fa-gear" style="font-size: 35px;"></i>
+                            <span class="menu-item">控制面板</span>
+                        </a>
+                        <ul class="list-unstyled menu-item">
+                            <li><a href="/Dashboard/Resource">菜单管理</a></li>
+                            <li><a href="/Dashboard/Role">角色管理</a></li>
+                            <li><a href="/Dashboard/User">用户管理</a></li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+
+        </aside>
+
+        <!-- 内容 -->
+        <section id="content" class="container">
+            @RenderBody()
+        </section>
+
+    </section>
+
+    <!-- Javascript Libraries -->
+    <!-- jQuery -->
+    <script src="~/Content/js/jquery.min.js"></script> <!-- jQuery Library -->
+    <script src="~/Content/js/jquery-ui.min.js"></script> <!-- jQuery UI -->
+    <script src="~/Content/js/jquery.easing.1.3.js"></script> <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
+    <!-- Bootstrap -->
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <!--  Form Related -->
+    <script src="~/Content/js/select.min.js"></script> <!-- Custom Select -->
+    <script src="~/Content/js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/autosize.min.js"></script> <!-- Textare autosize -->
+    <script src="~/Content/js/jquery.cookie.js"></script>
+    <script src="~/Content/js/validation/validate.min.js"></script> <!-- jQuery Form Validation Library -->
+    <script src="~/Content/js/validation/validationEngine.min.js"></script> <!-- jQuery Form Validation Library - requirred with above js -->
+    <!-- UX -->
+    <script src="~/Content/js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+    <!-- Other -->
+    <script src="~/Content/js/calendar.min.js"></script> <!-- Calendar -->
+    <!-- All JS functions -->
+    <script src="~/Content/js/functions.js"></script>
+    <!-- layer -->
+    <script src="~/Content/plugin/layer-v3.1.1/layer.js"></script>
+
+    @RenderSection("Scripts", false)
+
+    <script>
+        function SetSkin() {
+            $('body').attr('id', $.cookie("SkinClass"));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+﻿<#@ template language="C#" debug="false" hostspecific="true"#>
+<#@ include file="EF.Utility.CS.ttinclude"#><#@
+ output extension=".cs"#>
+ <#
+CodeGenerationTools code = new CodeGenerationTools(this);
+MetadataLoader loader = new MetadataLoader(this);
+CodeRegion region = new CodeRegion(this, 1);
+MetadataTools ef = new MetadataTools(this);
+
+string inputFile = @"..\..\White.Model\AdminDB.edmx";
+
+EdmItemCollection ItemCollection = loader.CreateEdmItemCollection(inputFile);
+string namespaceName = code.VsNamespaceSuggestion();
+
+EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
+
+#>
+
+/*------------------------------------
+ * 
+ * T4模板自动生成业务操作类
+ * 生成时间：<#=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") #>
+ * 
+*--------------------by WN---------*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using White.DAL;
+using White.Model;
+
+namespace White.BLL
+{
+<#
+
+// Emit Entity Types
+foreach (EntityType entity in ItemCollection.GetItems<EntityType>().OrderBy(e => e.Name))
+{
+    //fileManager.StartNewFile(entity.Name + "RepositoryExt.cs");
+    //BeginNamespace(namespaceName, code);
+    
+#>
+	public partial class <#=entity.Name#>BLL : BaseBLL<<#=entity.Name#>>
+    {
+		public <#=entity.Name#>BLL()
+		{
+			dal = new BaseDAL<<#=entity.Name#>>("AdminContext");
+		}
+    }
+<#}#>
+}

@@ -1,0 +1,129 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "师门";
+}
+@section Styles{
+    <link href="~/Content/plugin/OrgChart-master/css/jquery.orgchart.css" rel="stylesheet" />
+    <link href="~/Content/plugin/OrgChart-master/css/style.css" rel="stylesheet" />
+    <link href="~/Content/plugin/OrgChart-master/css/font-awesome.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .orgchart {
+            background: white;
+        }
+
+            .orgchart td.left, .orgchart td.right, .orgchart td.top {
+                border-color: #aaa;
+            }
+
+            .orgchart td > .down {
+                background-color: #aaa;
+            }
+
+            .orgchart .middle-level .title {
+                background-color: #006699;
+            }
+
+            .orgchart .middle-level .content {
+                border-color: #006699;
+            }
+
+            .orgchart .product-dept .title {
+                background-color: #009933;
+            }
+
+            .orgchart .product-dept .content {
+                border-color: #009933;
+            }
+
+            .orgchart .rd-dept .title {
+                background-color: #993366;
+            }
+
+            .orgchart .rd-dept .content {
+                border-color: #993366;
+            }
+
+            .orgchart .pipeline1 .title {
+                background-color: #996633;
+            }
+
+            .orgchart .pipeline1 .content {
+                border-color: #996633;
+            }
+
+            .orgchart .frontend1 .title {
+                background-color: #cc0066;
+            }
+
+            .orgchart .frontend1 .content {
+                border-color: #cc0066;
+            }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/Content/plugin/OrgChart-master/js/jquery.orgchart.js"></script>
+    <script>
+
+        $(function () {
+            $("#li_relation").addClass("active");
+        });
+
+        $.ajax({
+            url: "/Relation/GetTreeData",
+            type: "post",
+            success: function (json) {
+                setTreeView(json.Data);
+            }
+        });
+
+        function setTreeView(data) {
+
+            console.log(data);
+
+            $('#chart-container').orgchart({
+                'data': data,
+                'collapsed': true,
+                //拖动整个架构图
+                //'pan':true,
+                //鼠标滚动控制大小
+                'zoom': false,
+                //设置数据内容的字段，与数据源对应
+                'nodeContent': 'title',
+                'nodeTitle': 'name',
+                'nodeID': 'id'
+            });
+        }
+
+    </script>
+}
+
+<!-- Home Section -->
+
+<section id="home" class="main-about parallax-section">
+    <div class="overlay"></div>
+    <div id="particles-js"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <h1>几个人的小师门。</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div id="chart-container">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

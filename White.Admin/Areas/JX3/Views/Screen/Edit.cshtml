@@ -1,0 +1,131 @@
+﻿@model ScreenShot
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "编辑截图";
+}
+
+@section Styles{
+}
+
+@section Scripts{
+    <script src="~/Content/js/markdown.min.js"></script> <!-- Markdown Editor -->
+    <script src="~/Content/js/fileupload.min.js"></script> <!-- File Upload -->
+    <script>
+        $(function () {
+            if(@Model.ID>0){
+                var $div = $(".fileupload-preview.thumbnail");
+                $div.append("<img src='@Model.ImageUrl'/>");
+
+                $(".fileupload").addClass("fileupload-exists").removeClass("fileupload-new");
+            }
+
+            $("[name=imageFile]").change(function(){
+                $("#PicBase").prop("data-IsChange","1");
+            });
+        });
+
+        $('#EditForm').ajaxForm({
+            beforeSubmit: function () {
+                layer.load(1);
+            },
+            success: function (json) {
+
+                layer.closeAll();
+
+                if (json.Status == "success") {
+                    layer.msg(json.Message, { icon: 1 }, function () { window.location.href = '/JX3/Screen' });
+                } else {
+                    layer.msg("登录失败，请稍后重试", { btn: ["确定"] });
+                }
+            }
+        });
+
+        function btnSubmit() {
+
+            var $img = $("#PicBase");
+            var $pic = $(".fileupload-preview.thumbnail img");
+
+            if(@Model.ID>0){
+                if ($pic.length > 0 && $img.prop("data-IsChange")=="1") {
+                    $("#PicBase").val($pic.prop("src"));
+                }
+            }else{
+                if ($pic.length > 0) {
+                    $("#PicBase").val($pic.prop("src"));
+                } else {
+                    layer.msg("请选择图片！", { btn: ["确定"] });
+                    return false;
+                }
+            }
+
+            $("#EditForm").submit();
+        }
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li>首页</li>
+    <li>剑三</li>
+    <li><a href="/JX3/Screen">截图</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+
+
+<div class="block-area" id="horizontal">
+    <form class="form-horizontal form-validation" id="EditForm" method="post" action="/JX3/Screen/Edit">
+        <div class="fileupload fileupload-new block-area m-l-20" data-provides="fileupload">
+            <input type="hidden" id="ID" name="ID" value="@Model.ID" />
+            <input type="hidden" id="ImageUrl" name="ImageUrl" value="@Model.ImageUrl" />
+            <input type="hidden" id="Thumbnail" name="Thumbnail" value="@Model.Thumbnail" />
+            <input type="hidden" id="PicBase" name="PicBase" data-IsChange="0" value="" />
+            <div class="form-group">
+                <label for="Username" class="col-md-2 control-label">截图</label>
+                <div class="col-md-6">
+                    <div class="fileupload-preview thumbnail form-control"></div>
+                    <div>
+                        <span class="btn btn-file btn-alt btn-sm">
+                            <span class="fileupload-new">选择</span>
+                            <span class="fileupload-exists">修改</span>
+                            <input type="file" name="imageFile" />
+                        </span>
+                        <a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">移除</a>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Title" class="col-md-2 control-label">标题</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control input-sm validate[required]" id="Title" name="Title" value="@Model.Title" placeholder="...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="SubTitle" class="col-md-2 control-label">副标题</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control input-sm" id="SubTitle" name="SubTitle" value="@Model.SubTitle" placeholder="...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Describe" class="col-md-2 control-label">描述</label>
+                <div class="col-md-6">
+                    <textarea class="markdown-editor" name="Describe" rows="10">@Html.Raw(Model.Describe)</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @*<button type="submit" class="btn btn-info btn-sm m-t-10">保存</button>*@
+                    <input class="btn btn-info btn-sm m-t-10" type="button" onclick="btnSubmit()" value="保存">
+                    <button type="button" class="btn btn-info btn-sm m-t-10" onclick="javascript:history.go(-1)">返回</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+

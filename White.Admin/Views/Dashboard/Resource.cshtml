@@ -1,0 +1,212 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "菜单管理";
+}
+@section Styles{
+    <style type="text/css">
+        /**布局*/
+        ul {
+            padding: 0;
+        }
+
+        .permission-list {
+            margin: 0 0 0 20px;
+            width: 600px;
+            list-style-type: none;
+            font-size: 14px;
+            color: #fff;
+        }
+
+            .permission-list ul {
+                margin: 0;
+                list-style-type: none;
+            }
+
+            .permission-list > li > ul > li > div {
+                padding-left: 50px;
+            }
+
+            .permission-list > li > ul > li > ul > li > div {
+                padding-left: 95px;
+            }
+
+            .permission-list > li > ul > li > ul > li > ul > li > div {
+                padding-left: 140px;
+            }
+
+            /**细节*/
+            .permission-list div {
+                padding: 5px;
+            }
+
+
+                .permission-list div i {
+                    padding: 5px;
+                    cursor: pointer;
+                }
+
+                .permission-list div span:last-child {
+                    margin-left: 20px;
+                    float: right;
+                    margin-right: 20px;
+                }
+
+                    .permission-list div span:last-child a {
+                        margin-left: 5px;
+                        z-index: 99;
+                    }
+    </style>
+}
+
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            $("#menuOrderForm").ajaxForm({
+                beforeSubmit: function () {
+                    layer.load(1);
+                },
+                success: function (json) {
+                    layer.closeAll();
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 }, function () { window.location.reload(); });
+                    } else {
+                        layer.msg(json.Message, { icon: 2 });
+                    }
+                },
+                error: function (msg) {
+                    layer.alert(msg);
+                }
+            });
+
+            initOpenMenu();
+        });
+
+
+        //注册打开菜单事件
+        function initOpenMenu() {
+            $(".permission-list div .fa-plus-square-o").click(function () {
+                $(this).toggleClass("fa-plus-square-o").toggleClass("fa-minus-square-o");
+                $(this).parent().nextAll("ul").slideToggle(200);
+            });
+        }
+        //删除菜单
+        function Del(obj, id) {
+            var menuName = $(obj).parent().prev().text();
+            layer.confirm("确定要删除“" + menuName + "”菜单吗？", { icon: 3 }, function () {
+                $.post("/Dashboard/ResourceDel/" + id, function (json) {
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 });
+                        $(obj).parent().parent().parent().fadeOut(300);
+                    } else {
+                        layer.msg(json.Message, { icon: 2 });
+                    }
+                });
+            });
+        }
+
+        //菜单排序功能
+        function order() {
+            layer.load(1);
+            $.ajax({
+                url: "/Dashboard/GetResourceOrder",
+                type: "post",
+                success: function (data) {
+                    layer.closeAll();
+                    $("#menu-list").hide();
+                    $("#menu-list-order").show();
+                    $("#menu-list-order .permission-list").html(data);
+                }
+            });
+
+            $("#btnOrder").hide();
+            $("#btnSave").show();
+            $("#btnCancel").show();
+        }
+        //取消菜单排序
+        function orderCancel() {
+            $("#menu-list").show();
+            $("#menu-list-order").hide();
+
+            $("#btnOrder").show();
+            $("#btnSave").hide();
+            $("#btnCancel").hide();
+        }
+        //执行菜单排序操作
+        function saveOrder() {
+            var index = 1;
+            $("#menu-list-order .permission-list div").each(function () {
+                $(this).find("input").eq(1).val(index);
+                index++;
+            });
+            $("#menuOrderForm").submit();
+        }
+        //向上移动菜单
+        function setUp(obj) {
+            var $currentLi = $(obj).parents("li:first").attr("style", "");
+            var $prevLi = $currentLi.prev().attr("style", "color:#D15B47;font-weight:600");
+            if ($prevLi) {
+                var tmp = $currentLi.html();
+                $currentLi.html($prevLi.html());
+                $prevLi.html(tmp);
+            }
+        }
+        //向下移动菜单
+        function setDown(obj) {
+            var $currentLi = $(obj).parents("li:first").attr("style", "");
+            var $nextLi = $currentLi.next().attr("style", "color:#D15B47;font-weight:600");
+            if ($nextLi) {
+                var tmp = $currentLi.html();
+                $currentLi.html($nextLi.html());
+                $nextLi.html(tmp);
+            }
+        }
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li><a href="/Home">首页</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="inline">
+    <button type="button" onclick="order()" class="btn btn-sm red" id="btnOrder">
+        <i class="fa fa-sort-numeric-asc"></i> 排序
+    </button>
+    <button type="button" onclick="saveOrder()" class="btn btn-sm blue" id="btnSave" style="display:none;">
+        <i class="fa fa-check"></i> 保存
+    </button>
+    <button type="button" onclick="orderCancel()" class="btn btn-sm" id="btnCancel" style="display:none;">
+        <i class="fa fa-times"></i> 取消
+    </button>
+    <button type="button" onclick="javascript: location.href = '/Dashboard/ResourceEdit'" class="btn btn-sm red" id="btnAdd">
+        添加
+    </button>
+</div>
+
+<hr class="whiter m-t-20" />
+
+<div id="menu-list">
+    <div>
+        <ul class="permission-list">
+            @Html.Raw(ViewBag.Data.TreeHtml)
+        </ul>
+    </div>
+</div>
+<div id="menu-list-order" style="display:none">
+    <form id="menuOrderForm" action="/Dashboard/ResourceOrder" method="post">
+        <div>
+            <ul class="permission-list">
+                @Html.Raw(ViewBag.Data.TreeHtml)
+            </ul>
+        </div>
+    </form>
+</div>

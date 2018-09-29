@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{816DCA03-70D4-4D2E-8016-407C5985F24B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>White.Model</RootNamespace>
+    <AssemblyName>White.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="01AdminModel\ExtenseModel\Resource.cs" />
+    <Compile Include="01AdminModel\ExtenseModel\User_Info.cs" />
+    <Compile Include="02JX3Model\CommonModel\RelationTree.cs" />
+    <Compile Include="02JX3Model\ExtenseModel\Relation.cs" />
+    <Compile Include="99CommModel\JsonModel.cs" />
+    <Compile Include="Action_Log.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdminDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Error_Log.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Functional.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JX3DB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JX3DB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JX3DB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JX3DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JX3DB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JX3DB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relation.cs">
+      <DependentUpon>JX3DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Resource.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenShot.cs">
+      <DependentUpon>JX3DB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User_Info.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_User_Info.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WX_Config.cs">
+      <DependentUpon>AdminDB.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="AdminDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AdminDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AdminDB.edmx.diagram">
+      <DependentUpon>AdminDB.edmx</DependentUpon>
+    </None>
+    <None Include="App.Config" />
+    <EntityDeploy Include="JX3DB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>JX3DB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="JX3DB.edmx.diagram">
+      <DependentUpon>JX3DB.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="AdminDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdminDB.edmx</DependentUpon>
+      <LastGenOutput>AdminDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AdminDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdminDB.edmx</DependentUpon>
+      <LastGenOutput>AdminDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="JX3DB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JX3DB.edmx</DependentUpon>
+      <LastGenOutput>JX3DB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="JX3DB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JX3DB.edmx</DependentUpon>
+      <LastGenOutput>JX3DB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

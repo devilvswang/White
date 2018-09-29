@@ -1,0 +1,136 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "用户管理";
+
+    var list = Model as List<V_User_Info>;
+    var roleList = ViewBag.Data.RoleList as List<Role>;
+}
+
+@section Styles{
+
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#keyword").val('@ViewBag.Data.keyword');
+            $("#IsAdmin").val('@ViewBag.Data.IsAdmin');
+            $("#RoleID").val('@ViewBag.Data.RoleId');
+        });
+
+        function del(obj, id) {
+            layer.confirm("确定要“" + $(obj).text() + "”用户吗？", { icon: 3 }, function () {
+                $.ajax({
+                    url: "/Dashboard/UserDel",
+                    type: "post",
+                    data: { id: id },
+                    success: function (json) {
+                        if (json.Status == "success") {
+                            layer.alert(json.Message, { icon: 1 }, function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            layer.msg(json.Message, { icon: 2 });
+                        }
+                    }
+                });
+            });
+        }
+
+        function btnSearch() {
+            $("#searchForm").submit();
+        }
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li><a href="/Home">首页</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="inline">
+    <form class="form-inline" role="form" id="searchForm">
+        <div class="form-group m-l-10">
+            <input type="text" class="form-control input-sm" id="keyword" placeholder="用户名/姓名">
+        </div>
+        <div class="form-group m-l-10">
+            <select class="form-control input-sm" id="IsAdmin" name="IsAdmin">
+                <option value="">用户类型</option>
+                <option value="true">是</option>
+                <option value="false">否</option>
+            </select>
+        </div>
+        <div class="form-group m-l-10">
+            <select class="form-control input-sm" id="RoleID" name="RoleID">
+                <option value="">角色</option>
+                @foreach (var item in roleList)
+                {
+                    <option value="@item.ID">@item.Name</option>
+                }
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-sm" onclick="btnSearch()">查询</button>
+        <button type="button" onclick="javascript: location.href = '/Dashboard/UserEdit'" class="btn btn-sm red" id="btnAdd">
+            添加
+        </button>
+    </form>
+</div>
+
+<hr class="whiter m-t-20" />
+
+<div class="block-area" id="tableStriped">
+    <div class="table-responsive overflow">
+        <table class="tile table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>用户名</th>
+                    <th>姓名</th>
+                    <th>用户类型</th>
+                    <th>权限</th>
+                    <th>最后登录日期</th>
+                    <th>添加日期</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int index = (ViewBag.Data.PageIndex - 1) * ViewBag.Data.PageSize + 1;
+
+                    foreach (var item in list)
+                    {
+                        <tr>
+                            <td>@(index++)</td>
+                            <td>@item.Username</td>
+                            <td>@item.Realname</td>
+                            <td>@(item.IsAdmin ? "系统管理员" : "普通用户")</td>
+                            <td><a href="/Dashboard/RoleEdit/@item.RoleID">@item.RoleName</a></td>
+                            <td>@item.LastLoginDate</td>
+                            <td>@item.CreateDate</td>
+                            <td>
+                                <a href="/Dashboard/UserEdit/@item.ID">编辑</a>
+                                <a href="javascript:;" onclick="del(this,@item.ID)">删除</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="block-area row p-t-20">
+    <div class="col-md-12">
+        <label class="pagination" style="color:#ffffff;padding:7px;">共 @ViewBag.Data.RowCount 条数据，共 @ViewBag.Data.PageCount 页</label>
+        <ul class="pagination pull-right">
+            @Html.Raw(ViewBag.Data.PagedHtml)
+        </ul>
+    </div>
+</div>

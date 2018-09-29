@@ -1,0 +1,114 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "ImageTest";
+}
+
+@section Styles{
+    <link href="~/Content/css/lightbox.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/Content/js/pirobox.min.js"></script><!-- Lightbox -->
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li class="active">首页</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="inline">
+    <button type="button" onclick="javascript: location.href = '/Demo/Upload'" class="btn btn-sm red" id="btnAdd">
+        上传
+    </button>
+</div>
+
+<hr class="whiter m-t-20" />
+
+<div class="block-area p-l-20">
+    <a href="~/Content/img/gallery/1.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Fusce sagittis porta porttitor aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/1.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/2.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Sed ultrices orci iaculis augue tincidunt gravida">
+        <img src="~/Content/img/gallery/thumbs/2.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/3.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Donec ullamcorper malesuada magna mollis pellentesque">
+        <img src="~/Content/img/gallery/thumbs/3.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/4.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/4.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/5.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Quelorem venenatis aliquet enim non venenatis">
+        <img src="~/Content/img/gallery/thumbs/5.jpg" alt="">
+    </a>
+
+    <a href="~/Content/img/gallery/1.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Fusce sagittis porta porttitor aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/1.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/2.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Sed ultrices orci iaculis augue tincidunt gravida">
+        <img src="~/Content/img/gallery/thumbs/2.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/3.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Donec ullamcorper malesuada magna mollis pellentesque">
+        <img src="~/Content/img/gallery/thumbs/3.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/4.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/4.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/5.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Quelorem venenatis aliquet enim non venenatis">
+        <img src="~/Content/img/gallery/thumbs/5.jpg" alt="">
+    </a>
+
+    <a href="~/Content/img/gallery/1.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Fusce sagittis porta porttitor aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/1.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/2.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Sed ultrices orci iaculis augue tincidunt gravida">
+        <img src="~/Content/img/gallery/thumbs/2.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/3.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Donec ullamcorper malesuada magna mollis pellentesque">
+        <img src="~/Content/img/gallery/thumbs/3.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/4.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/4.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/5.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Quelorem venenatis aliquet enim non venenatis">
+        <img src="~/Content/img/gallery/thumbs/5.jpg" alt="">
+    </a>
+
+    <a href="~/Content/img/gallery/1.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Fusce sagittis porta porttitor aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/1.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/2.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Sed ultrices orci iaculis augue tincidunt gravida">
+        <img src="~/Content/img/gallery/thumbs/2.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/3.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Donec ullamcorper malesuada magna mollis pellentesque">
+        <img src="~/Content/img/gallery/thumbs/3.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/4.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/4.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/5.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Quelorem venenatis aliquet enim non venenatis">
+        <img src="~/Content/img/gallery/thumbs/5.jpg" alt="">
+    </a>
+
+    <a href="~/Content/img/gallery/1.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Fusce sagittis porta porttitor aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/1.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/2.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Sed ultrices orci iaculis augue tincidunt gravida">
+        <img src="~/Content/img/gallery/thumbs/2.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/3.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Donec ullamcorper malesuada magna mollis pellentesque">
+        <img src="~/Content/img/gallery/thumbs/3.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/4.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Aliquam tincidunt auctor nibh non convallis">
+        <img src="~/Content/img/gallery/thumbs/4.jpg" alt="">
+    </a>
+    <a href="~/Content/img/gallery/5.jpg" data-rel="gallery" class="pirobox_gall img-popup" title="Quelorem venenatis aliquet enim non venenatis">
+        <img src="~/Content/img/gallery/thumbs/5.jpg" alt="">
+    </a>
+
+</div>

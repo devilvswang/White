@@ -1,0 +1,140 @@
+﻿@model User_Info
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "用户编辑";
+
+    var roleList = ViewBag.Data.RoleList as List<Role>;
+}
+
+@section Styles{
+
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('#EditForm').ajaxForm({
+                beforeSubmit: function () {
+                    layer.load(1);
+                },
+                success: function (json) {
+                    layer.closeAll();
+
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 }, function () { window.location.href = '/Dashboard/User' });
+                    } else {
+                        layer.msg("登录失败，请稍后重试", { btn: ["确定"] });
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li><a href="/Home">首页</a></li>
+    <li><a href="/Dashboard/User">用户管理</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="horizontal">
+    <form class="form-horizontal form-validation" role="form" id="EditForm" method="post" action="/DashBoard/UserEdit">
+        <input type="hidden" id="ID" name="ID" value="@Model.ID" />
+        <div class="form-group">
+            <label for="Username" class="col-md-2 control-label">用户名</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control input-sm validate[required]" id="Username" name="Username" value="@Model.Username" @(Model.ID > 0 ? "readonly" : "") placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Password" class="col-md-2 control-label">密码</label>
+            <div class="col-md-6">
+                <input type="password" class="form-control input-sm validate[required]" id="Password" name="Password" value="@(Model.ID>0?"********":"")" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Password2" class="col-md-2 control-label">确认密码</label>
+            <div class="col-md-6">
+                <input type="password" class="form-control input-sm validate[required,equals[Password]]" id="Password2" name="Password2" value="@(Model.ID>0?"********":"")" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="IsAdmin" class="col-md-2 control-label">是否系统管理员</label>
+            <div class="col-md-6">
+                <select class="form-control input-sm validate[required]" id="IsAdmin" name="IsAdmin" @(Model.ID > 0 && Model.Username.ToLower() == "admin" ? "disabled" : "")>
+                    <option value="">请选择</option>
+                    <option value="true" @(Model.ID > 0 && Model.IsAdmin == true ? "selected" : "")>是</option>
+                    <option value="false" @(Model.ID > 0 && Model.IsAdmin == false ? "selected" : "")>否</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="RoleID" class="col-md-2 control-label">角色</label>
+            <div class="col-md-6">
+                <select class="form-control input-sm validate[required]" id="RoleID" name="RoleID">
+                    <option value="">请选择</option>
+                    @foreach (var item in roleList)
+                    {
+                        <option value="@item.ID" @(item.ID == Model.RoleID ? "selected" : "")>@item.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Realname" class="col-md-2 control-label">姓名</label>
+            <div class="col-md-6">
+                <input class="form-control auto-size input-sm validate[required]" id="Realname" name="Realname" value="@Model.Realname" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Mobile" class="col-md-2 control-label">手机号</label>
+            <div class="col-md-6">
+                <input class="form-control auto-size input-sm" id="Mobile" name="Mobile" value="@Model.Mobile" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Phone" class="col-md-2 control-label">座机</label>
+            <div class="col-md-6">
+                <input class="form-control auto-size input-sm" id="Phone" name="Phone" value="@Model.Phone" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="QQ" class="col-md-2 control-label">QQ</label>
+            <div class="col-md-6">
+                <input class="form-control auto-size input-sm" id="QQ" name="QQ" value="@Model.QQ" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="WeChat" class="col-md-2 control-label">微信</label>
+            <div class="col-md-6">
+                <input class="form-control auto-size input-sm" id="WeChat" name="WeChat" value="@Model.WeChat" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Email" class="col-md-2 control-label">邮箱</label>
+            <div class="col-md-6">
+                <input class="form-control auto-size input-sm" id="Email" name="Email" value="@Model.Email" placeholder="...">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="UserAddress" class="col-md-2 control-label">地址</label>
+            <div class="col-md-6">
+                <input class="form-control auto-size input-sm" id="UserAddress" name="UserAddress" value="@Model.UserAddress" placeholder="...">
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info btn-sm m-t-10">保存</button>
+                <button type="button" class="btn btn-info btn-sm m-t-10" onclick="javascript:history.go(-1)">返回</button>
+            </div>
+        </div>
+    </form>
+</div>

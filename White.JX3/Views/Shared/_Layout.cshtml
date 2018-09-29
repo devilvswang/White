@@ -1,0 +1,120 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/Content/css/font-awesome.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/Content/css/style.css">
+    @*<link href="https://fonts.googleapis.com/css?family=Lora|Merriweather:300,400" rel="stylesheet">*@
+
+    @RenderSection("Styles", false)
+
+</head>
+
+<body>
+
+    <!-- PRE LOADER -->
+
+    <div class="preloader">
+        <div class="sk-spinner sk-spinner-wordpress">
+            <span class="sk-inner-circle"></span>
+        </div>
+    </div>
+
+    <!-- Navigation section  -->
+
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">十一哟</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="li_home"><a href="/">首页</a></li>
+                    <li id="li_relation"><a href="/Relation">师门</a></li>
+                    <li id="li_screen"><a href="/Screen">截图</a></li>
+                    <li id="li_contact"><a href="/Contact">联系</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    @RenderBody()
+
+    <!-- Footer Section -->
+
+    <footer>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-5 col-md-offset-1 col-sm-6">
+                    <h3>Neuron Studio</h3>
+                    <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+                    <div class="footer-copyright">
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-md-offset-1 col-sm-6">
+                    <h3>Talk to us</h3>
+                    <p><i class="fa fa-globe"></i> 512 Delicious Street, San Francisco, CA 10880</p>
+                    <p><i class="fa fa-phone"></i> 010-020-0990</p>
+                    <p><i class="fa fa-save"></i> info@company.com</p>
+                </div>
+
+                <div class="clearfix col-md-12 col-sm-12">
+                    <hr>
+                </div>
+
+                <div class="col-md-12 col-sm-12">
+                    <ul class="social-icon">
+                        <li><a href="#" class="fa fa-facebook"></a></li>
+                        <li><a href="#" class="fa fa-twitter"></a></li>
+                        <li><a href="#" class="fa fa-google-plus"></a></li>
+                        <li><a href="#" class="fa fa-dribbble"></a></li>
+                        <li><a href="#" class="fa fa-linkedin"></a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back top -->
+    <a href="#back-top" class="go-top"><i class="fa fa-angle-up"></i></a>
+
+    <!-- SCRIPTS -->
+
+    <script src="/Content/js/jquery.js"></script>
+    <script src="/Content/js/bootstrap.min.js"></script>
+    <script src="/Content/js/particles.min.js"></script>
+    <script src="/Content/js/app.js"></script>
+    <script src="/Content/js/jquery.parallax.js"></script>
+    <script src="/Content/js/smoothscroll.js"></script>
+    <script src="/Content/js/custom.js"></script>
+
+    @RenderSection("Scripts", false)
+</body>
+</html>

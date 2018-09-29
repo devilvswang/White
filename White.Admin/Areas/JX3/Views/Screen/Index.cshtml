@@ -1,0 +1,75 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "截图列表";
+
+    var list = Model as List<ScreenShot>;
+}
+
+@section Styles{
+    <link href="~/Content/css/lightbox.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/Content/js/pirobox.min.js"></script><!-- Lightbox -->
+    <script>
+        //删除
+        function Del(obj, id) {
+            layer.confirm("确定要删除截图吗？", { icon: 3 }, function () {
+                $.post("/JX3/Screen/ScreenDel/" + id, function (json) {
+                    if (json.Status == "success") {
+                        layer.msg(json.Message, { icon: 1 });
+                        $(obj).parent().parent().parent().fadeOut(300);
+                    } else {
+                        layer.msg(json.Message, { icon: 2 });
+                    }
+                });
+            });
+        }
+    </script>
+}
+
+<!-- 导航 -->
+<ol class="breadcrumb hidden-xs">
+    <li><a href="/Home">首页</a></li>
+    <li><a href="#">剑网三</a></li>
+    <li class="active">@ViewBag.Title</li>
+</ol>
+
+<h4 class="page-title">@ViewBag.Title</h4>
+
+<hr class="whiter" />
+
+<div class="block-area" id="inline">
+    <button type="button" onclick="javascript: location.href = '/JX3/Screen/Edit'" class="btn btn-sm red" id="btnAdd">
+        上传
+    </button>
+</div>
+
+<hr class="whiter m-t-20" />
+
+<div class="block-area">
+
+    @foreach (var item in list)
+    {
+        <div class="p-l-20 p-t-20" style="width:auto; display:inline-block !important; display:inline;">
+            <a href="@item.ImageUrl" data-rel="gallery" class="pirobox_gall img-popup" title="@item.Title">
+                <img src="@item.Thumbnail" alt="@item.SubTitle">
+            </a>
+            <br>
+            <a type="button" class="btn btn-sm m-l-50" href="/JX3/Screen/Edit/@item.ID">编辑</a>
+            <input type="button" class="btn btn-sm m-l-10" onclick="Del(this,@item.ID)" value="删除">
+        </div>
+    }
+
+</div>
+
+<div class="block-area row p-t-20">
+    <div class="col-md-12">
+        <label class="pagination" style="color:#ffffff;padding:7px;">共 @ViewBag.Data.RowCount 条数据，共 @ViewBag.Data.PageCount 页</label>
+        <ul class="pagination pull-right">
+            @Html.Raw(ViewBag.Data.PagedHtml)
+        </ul>
+    </div>
+</div>
