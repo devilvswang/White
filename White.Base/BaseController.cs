@@ -93,6 +93,11 @@ namespace White.Base
         }
         #endregion
 
+        #region 从缓存中获取皮肤类名
+        /// <summary>
+        /// 从缓存中获取皮肤类名
+        /// </summary>
+        /// <returns></returns>
         public static string SkinClass()
         {
             var skin = "";
@@ -109,6 +114,7 @@ namespace White.Base
             }
 
             return skin;
-        }
+        } 
+        #endregion
     }
 }

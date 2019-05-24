@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using White.Model;
 
 using System.Threading;
 using System.Runtime.Serialization;
@@ -30,13 +29,17 @@ namespace Shield.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var key = "8caf1b0dd8924804";
-            var vi = "f35f800d95a865c0";
+            #region AES加解密
+            //var key = "8caf1b0dd8924804";
+            //var vi = "f35f800d95a865c0";
 
-            var enStr = AesEncrypt("wang", key, vi);
+            //var enStr = AesEncrypt("wang", key, vi);
 
-            ViewBag.AESStr = enStr;
-            ViewBag.DeStr = AesDecrypt(enStr, key, vi);
+            //ViewBag.AESStr = enStr;
+            //ViewBag.DeStr = AesDecrypt(enStr, key, vi); 
+            #endregion
+
+            Threading();
 
 
             return View();
@@ -53,105 +56,71 @@ namespace Shield.Controllers
             var dict = new Dictionary<string, object>();
             var jStr = "";
             var jStrList = "";
-            var dictModelList = new List<DictModel>();
+            //var dictModelList = new List<DictModel>();
 
-            var str = @"[
-                {""映射111111"":""这是第一个内容""},
-                {""映射888888"":""这是第二个内容""}
-                ]";
+            //var str = @"[
+            //    {""映射111111"":""这是第一个内容""},
+            //    {""映射888888"":""这是第二个内容""}
+            //    ]";
 
-            var keyMappingList = new List<Core_WebService_KeyMapping>();
+            //var keyMappingList = new List<Core_WebService_KeyMapping>();
 
-            keyMappingList.Add(new Core_WebService_KeyMapping
-            {
-                ID = 1,
-                PMConnGuid = "d4257e71-9419-4b9e-88a9-6f6abe64436b",
-                KeyID = 12,
-                ReturnKey = "映射111111",
-                MessageKey = "111111"
-            });
-            keyMappingList.Add(new Core_WebService_KeyMapping
-            {
-                ID = 2,
-                PMConnGuid = "f4d06e08-cb80-4bf3-a6ef-de80ca086f4e",
-                KeyID = 11,
-                ReturnKey = "映射888888",
-                MessageKey = "888888"
-            });
+            //keyMappingList.Add(new Core_WebService_KeyMapping
+            //{
+            //    ID = 1,
+            //    PMConnGuid = "d4257e71-9419-4b9e-88a9-6f6abe64436b",
+            //    KeyID = 12,
+            //    ReturnKey = "映射111111",
+            //    MessageKey = "111111"
+            //});
+            //keyMappingList.Add(new Core_WebService_KeyMapping
+            //{
+            //    ID = 2,
+            //    PMConnGuid = "f4d06e08-cb80-4bf3-a6ef-de80ca086f4e",
+            //    KeyID = 11,
+            //    ReturnKey = "映射888888",
+            //    MessageKey = "888888"
+            //});
 
-            try
-            {
-                JArray ja = (JArray)JsonConvert.DeserializeObject(str);
+            //try
+            //{
+            //    JArray ja = (JArray)JsonConvert.DeserializeObject(str);
 
-                if (ja.Count > 0 && ja != null)
-                {
-                    foreach (JObject items in ja)
-                    {
-                        foreach (var item in items)
-                        {
-                            var key = item.Key;
-                            var tempMapping = keyMappingList.Where(i => i.ReturnKey == item.Key).FirstOrDefault();
+            //    if (ja.Count > 0 && ja != null)
+            //    {
+            //        foreach (JObject items in ja)
+            //        {
+            //            foreach (var item in items)
+            //            {
+            //                var key = item.Key;
+            //                var tempMapping = keyMappingList.Where(i => i.ReturnKey == item.Key).FirstOrDefault();
 
-                            if (tempMapping != null)
-                            {
-                                key = tempMapping.MessageKey;
-                            }
+            //                if (tempMapping != null)
+            //                {
+            //                    key = tempMapping.MessageKey;
+            //                }
 
-                            if (!dict.ContainsKey(key))
-                            {
-                                dict.Add(key, item.Value.ToString());
-                                dictModelList.Add(new DictModel { Key = key, Value = item.Value.ToString() });
-                            }
-                        }
-                        //var reader = item.CreateReader();
+            //                if (!dict.ContainsKey(key))
+            //                {
+            //                    dict.Add(key, item.Value.ToString());
+            //                    dictModelList.Add(new DictModel { Key = key, Value = item.Value.ToString() });
+            //                }
+            //            }
+            //        }
+            //    }
 
-                        //var key = "";
-                        //var value = "";
-                        //var flag = false;
-
-                        //while (reader.Read())
-                        //{
-                        //    if (reader.Value != null)
-                        //    {
-
-                        //        if (reader.TokenType == JsonToken.PropertyName)
-                        //        {
-                        //            key = reader.Value.ToString();
-                        //        }
-                        //        else if (reader.TokenType == JsonToken.String || reader.TokenType == JsonToken.Integer || reader.TokenType == JsonToken.Float)
-                        //        {
-                        //            value = reader.Value.ToString();
-
-                        //            flag = true;
-                        //        }
-
-                        //        if (flag)
-                        //        {
-                        //            if (!dict.ContainsKey(key))
-                        //            {
-                        //                dict.Add(key, value);
-                        //            }
-
-                        //            flag = false;
-                        //        }
-                        //    }
-                        //}
-
-                    }
-                }
-
-                jStr = JsonConvert.SerializeObject(dict);
-                jStrList = JsonConvert.SerializeObject(dictModelList);
-            }
-            catch (Exception ex)
-            {
-                return Content(ex.Message);
-            }
+            //    jStr = JsonConvert.SerializeObject(dict);
+            //    jStrList = JsonConvert.SerializeObject(dictModelList);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Content(ex.Message);
+            //}
 
 
 
 
-            ViewBag.Json = str;
+            //ViewBag.Json = str;
 
             ViewBag.Dict = dict;
             ViewBag.JStr = jStr;
@@ -241,9 +210,9 @@ namespace Shield.Controllers
             Interlocked.Increment(ref poolFlag);  //标记+1
             if (poolFlag != maxThread)             //判断是否等于上限
                 muxConsole.ReleaseMutex();     //如果此线程达不到可执行线程上限,则继续开通,让后面的线程进来
-            Console.WriteLine("{0} 正在运行....../n", Thread.CurrentThread.Name);
+            Response.Write(string.Format("{0} 正在运行....../n", Thread.CurrentThread.Name));
             Thread.Sleep(5000);                                                                                             //模拟执行
-            Console.WriteLine("{0} 已经中止....../n", Thread.CurrentThread.Name);
+            Response.Write(string.Format("{0} 已经中止....../n", Thread.CurrentThread.Name));
 
             //标记-1
             Interlocked.Decrement(ref poolFlag);

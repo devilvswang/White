@@ -48,6 +48,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -89,12 +96,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\js\jquery.min.js" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ThreadingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -104,6 +113,8 @@
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\ShowJson.cshtml" />
+    <Content Include="Views\Home\WCF.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -114,6 +125,25 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Threading\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\White.Base\White.Base.csproj">
+      <Project>{b6c8398a-40e8-4210-a133-a570d1eb8d28}</Project>
+      <Name>White.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\White.BLL\White.BLL.csproj">
+      <Project>{a3fa363a-d6ab-4501-a34b-db595475a60e}</Project>
+      <Name>White.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\White.Common\White.Common.csproj">
+      <Project>{26703689-dd02-4db5-849d-3f9ed6c47f1c}</Project>
+      <Name>White.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\White.Model\White.Model.csproj">
+      <Project>{816dca03-70d4-4d2e-8016-407c5985f24b}</Project>
+      <Name>White.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
