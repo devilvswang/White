@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace White.Common.DesignPattern
+namespace White.Common.DesignPattern.Singleton
 {
     /// <summary>
     /// 单例模式
