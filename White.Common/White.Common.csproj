@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DesignPattern\AbstractFactory.cs" />
+    <Compile Include="DesignPattern\BuilderPattern.cs" />
     <Compile Include="DesignPattern\FactoryMethod.cs" />
     <Compile Include="DesignPattern\SimpleFactory.cs" />
     <Compile Include="DesignPattern\Singleton.cs" />

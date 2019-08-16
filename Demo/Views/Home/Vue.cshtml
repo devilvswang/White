@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Vue</title>
+</head>
+<body>
+
+    <div id="app">
+        {{ message }}
+    </div>
+
+    <div id="app-2">
+        <span v-bind:title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+    </div>
+
+    <div id="app-3">
+        <span v-if="isShow">可以看到了</span>
+    </div>
+
+    <div id="app-4">
+        <ol>
+            <li v-for="item in list">
+                {{ item.text }}
+            </li>
+        </ol>
+    </div>
+
+    <div id="app-5">
+        <p>{{ message }}</p>
+        <input type="button" v-on:click="reverseString" value="颠倒" />
+    </div>
+
+    <div id="app-6">
+        <p>{{ message }}</p>
+        <input v-model="message" />
+    </div>
+
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        //内容绑定
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello'
+            }
+        })
+
+        //dom属性绑定
+        var app2 = new Vue({
+            el: '#app-2',
+            data: {
+                message: '页面加载于' + new Date().toLocaleString()
+            }
+        })
+
+        //条件判断
+        var app3 = new Vue({
+            el: '#app-3',
+            data: {
+                isShow: true
+            }
+        })
+
+        //循环
+        var app4 = new Vue({
+            el: '#app-4',
+            data: {
+                list: [
+                    { text: "西瓜" },
+                    { text: "桃子" },
+                    { text: "香蕉" }
+                ]
+            }
+        })
+
+        //监听事件
+        var app5 = new Vue({
+            el: '#app-5',
+            data: {
+                message: "要反过来了"
+            },
+            methods: {
+                reverseString: function () {
+                    this.message = this.message.split('').reverse().join('');
+                }
+            }
+        })
+
+        //对象和输入框互联,绑定数据
+        var app6 = new Vue({
+            el: '#app-6',
+            data: {
+                message: ""
+            }
+        })
+    </script>
+</body>
+</html>

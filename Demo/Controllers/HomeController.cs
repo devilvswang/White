@@ -22,7 +22,7 @@ namespace Demo.Controllers
     {
         #region Index
         /// <summary>
-        /// 
+        /// Index
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
@@ -45,7 +45,7 @@ namespace Demo.Controllers
 
         #region Json
         /// <summary>
-        /// 
+        /// Json
         /// </summary>
         /// <returns></returns>
         public ActionResult ShowJson()
@@ -128,7 +128,10 @@ namespace Demo.Controllers
         #endregion
 
         #region WCF
-
+        /// <summary>
+        /// WCF
+        /// </summary>
+        /// <returns></returns>
         public ActionResult WCF()
         {
             //FieldBatchServiceClient client = new FieldBatchServiceClient();
@@ -153,6 +156,17 @@ namespace Demo.Controllers
             return View();
         }
 
+        #endregion
+
+        #region VueDemo
+        /// <summary>
+        /// Vue
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Vue()
+        {
+            return View();
+        } 
         #endregion
 
 
