@@ -25,6 +25,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -456,13 +457,13 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Areas\JX3\Views\Relation\Index.cshtml" />
     <Content Include="Areas\JX3\Views\Relation\Edit.cshtml" />
-    <None Include="Properties\PublishProfiles\White.Admin.pubxml" />
-    <None Include="Properties\PublishProfiles\White.AdminTest.pubxml" />
+    <None Include="Properties\PublishProfiles\Admin.pubxml" />
     <Content Include="Views\Dashboard\User.cshtml" />
     <Content Include="Views\Dashboard\UserEdit.cshtml" />
     <Content Include="Views\Dashboard\RoleEdit.cshtml" />
     <Content Include="Views\Admin\NotPermission.cshtml" />
     <Content Include="Views\Admin\Error.cshtml" />
+    <None Include="Properties\PublishProfiles\Admin2.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

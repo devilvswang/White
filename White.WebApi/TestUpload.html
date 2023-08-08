@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+        let sendData = { work_id: 8 }
+        let send = JSON.stringify(sendData) //必须要转化值的格式
+        $(function () {
+            //上传
+            $("#upload").click(function () {
+                //var formData = new FormData();
+                //var file = document.getElementById("file").files[0];
+                //formData.append("fileInfo", file);
+                //$.ajax({
+                //    url: "/api/Upload/UploadFile",
+                //    type: "POST",
+                //    data: formData,
+                //    contentType: false,//必须false才会自动加上正确的Content-Type
+                //    processData: false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理
+                //    success: function (data) {
+                //        alert(data);
+                //    },
+                //    error: function (data) {
+                //        alert("上传失败！");
+                //    }
+                //});
+
+                //$.ajax({
+                //    url: "/api/Upload/UploadFile",
+                //    type: 'post',
+                //    data: $('#uploadForm').serialize(),
+                //    success: function (data) {
+                //        alert(data);
+                //    }
+                //});
+
+                $.ajax({
+                    //几个参数需要注意一下
+                    type: "POST",//方法类型
+                    dataType: "json",//预期服务器返回的数据类型
+                    contentType: "application/json;charset=utf-8", //默认不是这个，所以必须要改
+                    url: "http://10.8.6.139:8099/YuanHe/Menzhen/CustomerTaskList", //这个是URL
+                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWdfdG9rZW5fdHlwZSI6ImFjY2Vzc190b2tlbiIsInVuaXF1ZV9uYW1lIjoibWVuemhlbl9kb2N0b3JfMSIsInJvbGUiOiJyb2xlX21lbnpoZW5fZG9jdG9yIiwibmJmIjoxNjUwNDQzMTE3LCJleHAiOjE2NTMwMzUxMTcsImlhdCI6MTY1MDQ0MzExN30.EGjfp-EDyxinshMvYmIhUDR9WCaAz_JkJfpc4q34ECI",
+                    // processData:false,
+                    data: send,
+                    success: function (result) {
+                        // console.log(result);//打印服务端返回的数据(调试用)
+                        alert("请求成功！");
+                    },
+                    error: function () {
+                        alert("数据异常！");
+                    }
+                });
+            });
+        });
+        
+    </script>
+</head>
+<body>
+    <form action="/api/Upload/UploadFile" type="post" id="uploadForm">
+        <input type="file" name="taskName" />
+        <input type="button" id="upload" name="btn_upload" value="上传文件" />
+    </form>
+</body>
+</html>

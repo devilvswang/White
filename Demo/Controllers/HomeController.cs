@@ -37,7 +37,13 @@ namespace Demo.Controllers
             //ViewBag.DeStr = AesDecrypt(enStr, key, vi); 
             #endregion
 
-            Threading();
+            //授权使用开始时间
+            var startTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            //授权使用结束时间
+            var endTime = DateTime.Now.AddDays(20).ToString("yyyy-MM-dd") + " 23:59:59";
+
+
+            //Threading();
 
             return View();
         }
@@ -292,7 +298,7 @@ namespace Demo.Controllers
             }
 
         }
-        #endregion 
+        #endregion
 
         #endregion
     }

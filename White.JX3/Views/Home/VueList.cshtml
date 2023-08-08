@@ -1,0 +1,161 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "";
+}
+
+<style>
+    #app td input{
+        height:20px;
+    }
+</style>
+
+<!-- Home Section -->
+
+<section id="home" class="main-contact parallax-section">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+
+<section id="contact">
+    <div class="container">
+        <div class="row">
+
+            <div id="app" class="col-md-offset-1 col-md-10 col-sm-12">
+
+            <table v-show="userlist.length" class="table-condensed" border="1">
+            <tr>
+                    <th>姓名</th>
+                    <th>电话号码</th>
+                    <th>Email地址</th>
+                    <th>操作</th>
+            </tr>
+            <tr v-for="(user,index) in userlist">
+                <td><input type="text" v-model="user.Name" /></td>
+                <td><input type="text" v-model="user.Tel" /></td>
+                <td><input type="text" v-model="user.Mail" /></td>
+                <td>
+                    <div v-if="user.ID!=0">
+                        <a href="#" v-on:click="updateUser(user.Name,user.Tel,user.Mail)">修改</a>
+                        <a href="#" v-on:click="delUser(user.ID)">删除</a>
+                    </div>
+                    <div v-else>
+                        <a href="#" v-on:click="addUser(user.Name,user.Tel,user.Mail)">添加</a>
+                    </div>
+                </td>
+            </tr>
+            </table>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            userlist:[]
+        },
+        mounted() {
+            this.getAllUser();
+        },
+        methods:{
+            getAllUser:function () {
+                axios.get('/Home/Get').then(
+                    (response) => {
+                        this.userlist = [];
+
+                        for(var i=0; i<response.data.Data.length;i++){
+                                this.userlist.push(response.data.Data[i]);
+                        }
+
+                        this.userlist.push({ ID:0,Name:'',Tel:'',Mail:'' })
+                    },
+                    (response) => {
+                        alert(response.Message)
+                    }
+                ).catch(function (response) {
+                    alert(response)
+                })
+            },
+            addUser:function (name, tel, mail) {
+                
+                let postData = new URLSearchParams()
+
+                postData.append('Name', name)
+                postData.append('Tel', tel)
+                postData.append('Mail', mail)
+
+                axios.post('/Home/Add',postData)
+                .then(
+                    (response) => {
+                        this.userlist = [];
+
+                        for(var i=0; i<response.data.Data.length;i++){
+                                this.userlist.push(response.data.Data[i]);
+                        }
+
+                        this.userlist.push({ ID:0,Name:'',Tel:'',Mail:'' })
+                    },
+                    (response) => {
+                        alert(response.Message)
+                    }
+                ).catch(function (response) {
+                    alert(response)
+                })
+            },
+            updateUser:function (id,name, tel, mail) {
+                axios.post('/Home/Update',{ user: { ID: id, Name: name, Tel: tel, Mail: mail} })
+                .then(
+                    (response) => {
+                        this.userlist = [];
+
+                        for(var i=0; i<response.data.Data.length;i++){
+                                this.userlist.push(response.data.Data[i]);
+                        }
+
+                        this.userlist.push({ ID:0,Name:'',Tel:'',Mail:'' })
+                    },
+                    (response) => {
+                        alert(response.Message)
+                    }
+                ).catch(function (response) {
+                    alert(response)
+                })
+            },
+            delUser:function (id) {
+                axios.post('/Home/Delete',{ id: id})
+                .then(
+                    (response) => {
+                        this.userlist = [];
+
+                        for(var i=0; i<response.data.Data.length;i++){
+                                this.userlist.push(response.data.Data[i]);
+                        }
+
+                        this.userlist.push({ ID:0,Name:'',Tel:'',Mail:'' })
+                    },
+                    (response) => {
+                        alert(response.Message)
+                    }
+                ).catch(function (response) {
+                    alert(response)
+                })
+            }
+        }
+    })
+</script>

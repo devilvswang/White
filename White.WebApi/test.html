@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script>
+			let sendData={work_id:8}
+			let send=JSON.stringify(sendData) //必须要转化值的格式
+        $(function () {
+            //上传
+            $("#upload").click(function () {
+                //var formData = new FormData();
+                //var file = document.getElementById("file").files[0];
+                //formData.append("fileInfo", file);
+                //$.ajax({
+                //    url: "/api/Upload/UploadFile",
+                //    type: "POST",
+                //    data: formData,
+                //    contentType: false,//必须false才会自动加上正确的Content-Type
+                //    processData: false,//必须false才会避开jQuery对 formdata 的默认处理，XMLHttpRequest会对 formdata 进行正确的处理
+                //    success: function (data) {
+                //        alert(data);
+                //    },
+                //    error: function (data) {
+                //        alert("上传失败！");
+                //    }
+                //});
+
+                
+				
+				$.ajax({
+					//几个参数需要注意一下
+					type: "POST",//方法类型
+					dataType: "json",//预期服务器返回的数据类型
+					contentType:"application/json;charset=utf-8", //默认不是这个，所以必须要改
+					url: "http://10.8.6.139:8099/YuanHe/Menzhen/CustomerTaskList", //这个是URL
+					// processData:false,
+					data:send,
+					success: function (result) {
+					// console.log(result);//打印服务端返回的数据(调试用)
+					alert("请求成功！");
+					},
+					error : function() {
+					alert("数据异常！");
+					}
+					});
+            });
+        });
+		
+        fetch('http://10.3.7.36:7100/api/MainEntrance?sign=9ee6ba9ef96edb95e9da6336439503ae&orgApplyNo=1000151322-2433364').then(res => {console.log(res)})
+
+        
+    </script>
+</head>
+<body>
+    <input type="button" id="upload" name="btn_11" value="请求" />
+</body>
+</html>

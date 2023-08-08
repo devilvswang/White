@@ -27,5 +27,6 @@ namespace White.Model
     
         public virtual DbSet<ScreenShot> ScreenShot { get; set; }
         public virtual DbSet<Relation> Relation { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

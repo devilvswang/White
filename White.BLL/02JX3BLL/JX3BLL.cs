@@ -2,7 +2,7 @@
 /*------------------------------------
  * 
  * T4模板自动生成业务操作类
- * 生成时间：2018-09-13 11:36:06
+ * 生成时间：2020-05-11 09:55:44
  * 
 *--------------------by WN---------*/
 using System;
@@ -26,6 +26,13 @@ namespace White.BLL
 		public ScreenShotBLL()
 		{
 			dal = new BaseDAL<ScreenShot>("JX3Context");
+		}
+    }
+	public partial class UserBLL : BaseBLL<User>
+    {
+		public UserBLL()
+		{
+			dal = new BaseDAL<User>("JX3Context");
 		}
     }
 }

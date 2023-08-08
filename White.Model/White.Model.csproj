@@ -108,6 +108,9 @@
     <Compile Include="ScreenShot.cs">
       <DependentUpon>JX3DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>JX3DB.tt</DependentUpon>
+    </Compile>
     <Compile Include="User_Info.cs">
       <DependentUpon>AdminDB.tt</DependentUpon>
     </Compile>

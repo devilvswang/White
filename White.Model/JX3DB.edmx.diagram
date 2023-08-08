@@ -7,6 +7,7 @@
       <Diagram DiagramId="9e1f2e1468214a8b91fd6e345b1a1e6a" Name="Diagram1">
         <EntityTypeShape EntityType="JX3Model.ScreenShot" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="JX3Model.Relation" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="JX3Model.User" Width="1.5" PointX="0.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
